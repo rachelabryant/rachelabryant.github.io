@@ -1,0 +1,349 @@
+/* ==========================================================================
+   Style sheet for an academic economist's personal site.
+
+   Layout: one centred reading column. On the research and teaching pages,
+   a narrow rail to the left of each entry carries the year or term, the way
+   the margin of a CV does. Everything else is left-aligned and quiet.
+
+   To change the look, edit the values in :root below. Nothing else needs
+   touching unless you want to.
+   ========================================================================== */
+
+:root {
+  /* Colour */
+  --paper:  #ffffff;   /* page background */
+  --ink:    #1c2430;   /* body text */
+  --muted:  #5e6a79;   /* dates, venues, navigation */
+  --rule:   #d8dee6;   /* hairlines */
+  --accent: #1f4e8c;   /* links */
+
+  /* Type */
+  --serif: "Literata", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --sans:  "Public Sans", "Helvetica Neue", Arial, sans-serif;
+
+  /* Measure */
+  --column: 44rem;
+  --gutter: 16px;
+}
+
+/* Dark mode follows the reader's system setting. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:  #121922;
+    --ink:    #e3e8ef;
+    --muted:  #98a4b4;
+    --rule:   #2a3544;
+    --accent: #8db6ec;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper:  #121922;
+  --ink:    #e3e8ef;
+  --muted:  #98a4b4;
+  --rule:   #2a3544;
+  --accent: #8db6ec;
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+html {
+  font-size: 106.25%;             /* 17px */
+  -webkit-text-size-adjust: 100%;
+}
+@media (max-width: 40rem) {
+  html { font-size: 100%; }       /* 16px on phones */
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  line-height: 1.6;
+  padding-left:  max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+.page {
+  max-width: var(--column);
+  margin: 0 auto;
+  padding-block: 1.75rem 3.5rem;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+img { max-width: 100%; height: auto; }
+
+h1, h2, h3 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 2.5rem 0 0.9rem;
+}
+.lede + section > h2 { margin-top: 0; }   /* first section sits right under the intro line */
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+
+/* --------------------------------------------------------------------------
+   Header and navigation
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 2.5rem;
+}
+/* The home page carries the name in its heading, so its header is nav only. */
+.site-header.home {
+  justify-content: flex-end;
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 1.75rem;
+}
+
+.site-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+.site-name:hover { text-decoration: underline; }
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+}
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.site-nav a:hover { color: var(--ink); }
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+}
+
+/* --------------------------------------------------------------------------
+   Home page
+   -------------------------------------------------------------------------- */
+
+.intro {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 1.5rem 2.5rem;
+  align-items: start;
+}
+
+.portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.profile-links {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+.profile-links a { text-decoration: none; }
+.profile-links a:hover { text-decoration: underline; }
+
+.intro h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.3rem;
+}
+.role {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin: 0 0 1.5rem;
+}
+
+.plain-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.plain-list li { margin-bottom: 0.35rem; }
+
+.contact {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.3rem 1.25rem;
+  margin: 0;
+}
+.contact dt { color: var(--muted); }
+.contact dd { margin: 0; }
+
+@media (max-width: 40rem) {
+  .intro { grid-template-columns: 1fr; }
+  .portrait img { width: 9.5rem; }
+  .profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.2rem;
+    line-height: 1.7;
+  }
+  .intro h1 { font-size: 2.1rem; }
+  .contact { grid-template-columns: 1fr; gap: 0.1rem; }
+  .contact dd { margin-bottom: 0.6rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Research and teaching pages
+   -------------------------------------------------------------------------- */
+
+.page-title {
+  font-size: 1.9rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.5rem;
+}
+.lede {
+  color: var(--muted);
+  max-width: 60ch;
+  margin: 0 0 2.25rem;
+}
+
+.entries {
+  --rail: 4rem;                   /* width of the year column */
+  display: grid;
+  gap: 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.entries.terms { --rail: 7rem; }  /* wider column for "Spring 2025" */
+
+.entry {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  column-gap: 1rem;
+  align-items: baseline;
+}
+
+.when {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+.entry h3 {
+  font-size: 1.12rem;
+  font-weight: 600;
+  margin: 0;
+}
+.entry h3 a { color: inherit; text-decoration: none; }
+.entry h3 a:hover { text-decoration: underline; }
+
+.authors { margin: 0.1rem 0 0; }
+.venue {
+  color: var(--muted);
+  margin: 0.1rem 0 0;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1.1rem;
+  margin: 0.45rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+}
+.links a { text-decoration: none; }
+.links a:hover { text-decoration: underline; }
+
+.entry details { margin-top: 0.4rem; }
+.entry summary {
+  cursor: pointer;
+  width: max-content;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  color: var(--accent);
+  list-style: none;
+}
+.entry summary::-webkit-details-marker { display: none; }
+.entry summary::before { content: "+ "; }
+.entry details[open] summary::before { content: "\2013  "; }
+
+.abstract {
+  max-width: 62ch;
+  font-size: 0.96rem;
+  margin: 0.5rem 0 0;
+}
+.jel {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0.4rem 0 0;
+}
+
+@media (max-width: 40rem) {
+  .entry {
+    grid-template-columns: 1fr;
+    row-gap: 0.1rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-top: 3.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.site-footer p { margin: 0; }
+.site-footer a { color: inherit; }
